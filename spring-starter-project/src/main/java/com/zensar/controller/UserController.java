@@ -1,6 +1,7 @@
 package com.zensar.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -30,12 +31,12 @@ public class UserController {
 	private UserService service;
 
 	@GetMapping("/{userId}")
-	public User getUser(@PathVariable("userId") int userId) {
+	public Optional<User> getUser(@PathVariable("userId") int userId) {
 		return service.getUser(userId);
 	}
 
 	@GetMapping()
-	public List<User> getAllUsers() {
+	public Iterable<User> getAllUsers() {
 		return service.getAllUsers();
 	}
 

@@ -1,6 +1,6 @@
 package com.zensar.service;
 
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,24 +14,24 @@ public class UserServiceImpl1 implements UserService {
 	@Autowired
 	private UserRepository repository;
 	
-	public User getUser(int userId) {
-			return repository.getUser(userId);
+	public Optional<User> getUser(int userId) {
+			return repository.findById(userId);
 	}
 
-	public List<User> getAllUsers() {
-		return repository.getAllUsers();
+	public Iterable<User> getAllUsers() {
+		return repository.findAll();
 	}
 
 	public void deleteUser(int userId) {
-		repository.deleteUser(userId);
+		repository.deleteById(userId);
 
 	}
 
 	public void updateUser(User user) {
-		repository.updateUser(user);
+		repository.save(user);
 	}
 
 	public void insertUser(User user) {
-		repository.insertUser(user);
+		repository.save(user);
 	}
 }

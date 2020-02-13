@@ -1,14 +1,15 @@
 package com.zensar.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.zensar.entites.User;
 
 public interface UserService {
 
-	public User getUser(int userId);
+	public Optional<User> getUser(int userId);
 
-	public List<User> getAllUsers();
+	public Iterable<User> getAllUsers();
 
 	public void deleteUser(int userId);
 
