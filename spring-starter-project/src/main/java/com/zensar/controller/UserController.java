@@ -1,8 +1,8 @@
 package com.zensar.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zensar.entites.User;
+import com.zensar.service.UserService;
 
 @RestController
 @RequestMapping(value = "/v1/users", produces = { MediaType.APPLICATION_JSON_VALUE })
@@ -25,47 +26,31 @@ public class UserController {
 	// http://localhost:8080/users/
 	// @RequestMapping(value = "/",method=RequestMethod.GET)
 
-	static List<User> users = new ArrayList<>();
-
-	static {
-		users.add(new User(1001, "Ramesh", 10000));
-	}
+	@Autowired
+	private UserService service;
 
 	@GetMapping("/{userId}")
 	public User getUser(@PathVariable("userId") int userId) {
-
-		for (User user : users) {
-			if (user.getUserId() == userId) {
-				return user;
-			}
-		}
-
-		return null;
+		return service.getUser(userId);
 	}
 
 	@GetMapping()
 	public List<User> getAllUsers() {
-		return users;
+		return service.getAllUsers();
 	}
 
 	@DeleteMapping("/{userId}")
 	public void deleteUser(@PathVariable("userId") int userId) {
-		for (int i = 0; i < users.size(); i++) {
-			User user = users.get(i);
-			if (user.getUserId() == userId) {
-				users.remove(user);
-			}
-		}
-
+		service.deleteUser(userId);
 	}
 
 	@PutMapping()
 	public void updateUser(User user) {
-		System.out.println("User Updated");
+		service.updateUser(user);
 	}
 
 	@PostMapping()
 	public void insertUser(@RequestBody User user) {
-		users.add(user);
+		service.insertUser(user);
 	}
 }
